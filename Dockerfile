@@ -1,8 +1,8 @@
-FROM tensorflow/tensorflow:2.0.1-gpu
+FROM tensorflow/tensorflow:2.0.0-gpu-py3
 
-COPY . /SynthSeg
+COPY --chmod=555 "." "/synthseg"
 
-RUN pip install --upgrade pip && \
-    pip install -r /SynthSeg/requirements.txt
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install "/synthseg"
 
-ENTRYPOINT ["python", "/SynthSeg/scripts/commands/SynthSeg_predict.py"]
+ENTRYPOINT ["python", "/synthseg/scripts/commands/SynthSeg_predict.py"]
